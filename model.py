@@ -64,7 +64,7 @@ def fine_tune_model(X, y, eps_x):
 # ================================
 # 5. Generate candidate counterfactual
 # ================================
-def generate_counterfactual(x, clf_old, target_class=1, max_steps=20):
+def generate_counterfactual(x, clf_old, target_class=1, max_steps=1378):
     x_cf = x.copy()
     for step in range(max_steps):
         prob = clf_old.predict_proba(pd.DataFrame([x_cf]))[0, target_class]
@@ -99,7 +99,7 @@ if y0_pred == 0:
     print("Original instance predicted ≤50K")
     x_cf = generate_counterfactual(x0, clf_old, target_class=1)
     min_s, mean_s, max_s, frac_valid = robustness_check(
-        x_cf, X_train, y_train, eps_x=0.05, N=30, target_class=1
+        x_cf, X_train, y_train, eps_x=0.015, N=30, target_class=1
     )
     print("\nCandidate counterfactual:\n", x_cf)
     print("\nRobustness scores across perturbed models:")
